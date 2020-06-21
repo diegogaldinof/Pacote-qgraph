@@ -26,6 +26,7 @@ ________
 
 <br>
 
+
 Vamos começar com a função `qgraph()`, usada para plotar redes.
 
 O primeiro argumento de `qgraph` é *input.* O *input* pode ser uma matriz de adjacência (matriz N x N com diagonal 0 e com valores 0 e 1 distribuídos nas linhas e colunas), uma matriz ponderada (uma matriz N x N com valores diferentes de 0 e 1 nas linhas e colunas). Pode também ser matriz de correlações, objetos de classe `"sem"`,`"lavaan"`, `"principal"`, ou o resultado do `glasso`. Pode também ser uma matriz de adjacência ponderada (matriz N x N, diagonal 0 e valores quaisquer nas linhas e colunas).
@@ -165,7 +166,7 @@ ______
 
 ##### `legend`
 
-Lógico e indica se a legenda deve ser plotada. Default é `TRUE` se `groups` ou `nodeNames` forem colocados.
+Lógico e indica se a legenda deve ser plotada. Default é `TRUE` se `groups` ou `nodeNames` forem colocados. Se você não quiser que a legenda apareça, use `legend = FALSE`.
 
 <br>
 
@@ -922,9 +923,18 @@ _____
 _____
 
 
+Você pode salvar as redes usando uma função do R (e.g., `pdf()`) ou selecionando alguns argumentos dentro da função `qgraph()`.
+
+<br>
+
+
 #### `pdf()`
 
-Para as redes terem melhor resolução, salve em pdf. É possível salvar várias redes em um mesmo pdf. Lembre-se: execute todos as linhas de uma vez! Você também pode salvar em png, o processo é o mesmo. Veja se, o resultado de `dev.off()` é `null device = 1`. Caso não seja, execute `dev.off()` até aparecer esse resultado.
+Para as redes terem melhor resolução, salve em pdf. É possível salvar várias redes em um mesmo pdf.
+
+Quando estiver usando essa função, execute todos as linhas de código de uma vez. Ou seja, você vai selecionar desde a linha com a função `pdf()` até a linha da função `dev.off()` (função usada para "fechar" arquivo pdf que foi aberto). Você também pode salvar em png. O processo é o mesmo.
+
+Veja se, o resultado de `dev.off()` é `null device = 1`. Caso não seja, execute `dev.off()` até aparecer esse resultado.
 
 Para a rede ficar maior no pdf, a opção `width = 16` e `height = 10` pode ser útil. Caso seja necessário salvar a rede no tamanho de um A4, colocar `width = 10` e `height = 10`. Porém, você pode ajustar essas medidas para o tamanho que achar mais adequado.
 
@@ -932,8 +942,8 @@ A rede será salva no seu diretório de trabalho (para saber qual é, `getwd()`)
 
 ```{r message=FALSE, warning=FALSE, echo = TRUE, results='hide'}
 pdf("rede.pdf", width = 16, height = 10)
-par(mfrow = c(1,2))
-qgraph(cor)
+par(mfrow = c(1,2)) ## se for salvar apenas uma rede, nao precisa dessa linha
+qgraph(cor, layout = "spring", color = "black", border.width = 1.2)
 qgraph(cor)
 dev.off()
 ```
@@ -941,6 +951,7 @@ dev.off()
 ```{r echo=FALSE}
 dev.off()
 ```
+
 
 <br>
 
